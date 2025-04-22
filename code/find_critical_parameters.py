@@ -14,17 +14,33 @@ from datasets import load_dataset
 import matplotlib.pyplot as plt
 from sklearn.metrics import precision_recall_curve, auc
 import itertools
+from huggingface_hub import login
 
 def load_model(model_id=None, device='cuda'):
-    model = AutoModelForCausalLM.from_pretrained(
-            model_id, 
-            torch_dtype=torch.float16,
-            trust_remote_code=True,
-            device_map='auto')
-    # print(model.__class__)
-    tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    # Use Hugging Face model ID
+    hf_model_id = model_id if model_id and not model_id.startswith('./') else "meta-llama/Llama-2-7b-chat-hf"
+    
+    print(f"Loading model from Hugging Face: {hf_model_id}")
+    try:
+        #login()
+        # Load with reduced precision to save memory
+        model = AutoModelForCausalLM.from_pretrained(
+                hf_model_id, 
+                torch_dtype=torch.float16,
+                trust_remote_code=True,
+                device_map="auto",
+                low_cpu_mem_usage=True
+        )
 
-    return model, tokenizer
+        # Login huggingface
+        login()
+        
+        tokenizer = AutoTokenizer.from_pretrained(hf_model_id, trust_remote_code=True)
+        print("Model loaded successfully from Hugging Face")
+        return model, tokenizer
+    except Exception as e:
+        print(f"Error loading model: {e}")
+        raise
 
 
 def find_critical_para(model_id):
@@ -63,13 +79,16 @@ def find_critical_para(model_id):
         basic_sample["source"] = sample
         basic_sample["target"] = "Sure"
         d = apply_prompt_template(basic_sample)
-        input_ids = tokenizer(d['text']).input_ids
-        sep = input_ids.index(sep_token_id)
         
-        input_ids = input_ids[:sep] + input_ids[sep+1:]
-        input_ids = torch.tensor(np.array([input_ids]))
+        # Fix tokenization and tensor creation
+        inputs = tokenizer(d['text'], return_tensors="pt")
+        input_ids = inputs.input_ids.to(model.device)
+        sep = (input_ids == sep_token_id).nonzero()[0, 1].item()
+        
+        # Create target_ids and ensure they have the correct dtype
         target_ids = input_ids.clone()
         target_ids[:, :sep] = -100
+        
         optimizer.zero_grad()
         outputs = model(input_ids, labels=target_ids)
         neg_log_likelihood = outputs.loss
@@ -94,13 +113,16 @@ def find_critical_para(model_id):
         basic_sample["source"] = sample
         basic_sample["target"] = "Sure"
         d = apply_prompt_template(basic_sample)
-        input_ids = tokenizer(d['text']).input_ids
-        sep = input_ids.index(sep_token_id)
-
-        input_ids = input_ids[:sep] + input_ids[sep+1:]
-        input_ids = torch.tensor(np.array([input_ids]))
+        
+        # Fix tokenization and tensor creation
+        inputs = tokenizer(d['text'], return_tensors="pt")
+        input_ids = inputs.input_ids.to(model.device)
+        sep = (input_ids == sep_token_id).nonzero()[0, 1].item()
+        
+        # Create target_ids and ensure they have the correct dtype
         target_ids = input_ids.clone()
         target_ids[:, :sep] = -100
+        
         optimizer.zero_grad()
         outputs = model(input_ids, labels=target_ids)
         neg_log_likelihood = outputs.loss
@@ -131,13 +153,16 @@ def find_critical_para(model_id):
         basic_sample["source"] = sample
         basic_sample["target"] = "Sure"
         d = apply_prompt_template(basic_sample)
-        input_ids = tokenizer(d['text']).input_ids
-        sep = input_ids.index(sep_token_id)
         
-        input_ids = input_ids[:sep] + input_ids[sep+1:]
-        input_ids = torch.tensor(np.array([input_ids]))
+        # Fix tokenization and tensor creation
+        inputs = tokenizer(d['text'], return_tensors="pt")
+        input_ids = inputs.input_ids.to(model.device)
+        sep = (input_ids == sep_token_id).nonzero()[0, 1].item()
+        
+        # Create target_ids and ensure they have the correct dtype
         target_ids = input_ids.clone()
         target_ids[:, :sep] = -100
+        
         optimizer.zero_grad()
         outputs = model(input_ids, labels=target_ids)
         neg_log_likelihood = outputs.loss

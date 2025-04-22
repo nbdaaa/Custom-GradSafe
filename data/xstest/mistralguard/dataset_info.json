@@ -1,0 +1,116 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "xstest-v2-copy",
+  "dataset_size": 1999421,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/gpt4-00000-of-00001.parquet": {
+      "num_bytes": 133306,
+      "checksum": null
+    },
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/llama2new-00000-of-00001.parquet": {
+      "num_bytes": 242845,
+      "checksum": null
+    },
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/llama2orig-00000-of-00001.parquet": {
+      "num_bytes": 203821,
+      "checksum": null
+    },
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/mistralguard-00000-of-00001.parquet": {
+      "num_bytes": 141699,
+      "checksum": null
+    },
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/mistralinstruct-00000-of-00001.parquet": {
+      "num_bytes": 188051,
+      "checksum": null
+    },
+    "hf://datasets/natolambert/xstest-v2-copy@b71afe2a6d10e5a6254ea8bcb006c48b095a15d5/data/prompts-00000-of-00001.parquet": {
+      "num_bytes": 20531,
+      "checksum": null
+    }
+  },
+  "download_size": 930253,
+  "features": {
+    "id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "type": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "completion": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "annotation_1": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "annotation_2": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "agreement": {
+      "dtype": "bool",
+      "_type": "Value"
+    },
+    "final_label": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 2929674,
+  "splits": {
+    "gpt4": {
+      "name": "gpt4",
+      "num_bytes": 264757,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    },
+    "llama2new": {
+      "name": "llama2new",
+      "num_bytes": 523074,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    },
+    "llama2orig": {
+      "name": "llama2orig",
+      "num_bytes": 476580,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    },
+    "mistralguard": {
+      "name": "mistralguard",
+      "num_bytes": 309478,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    },
+    "mistralinstruct": {
+      "name": "mistralinstruct",
+      "num_bytes": 377642,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    },
+    "prompts": {
+      "name": "prompts",
+      "num_bytes": 47890,
+      "num_examples": 450,
+      "dataset_name": "xstest-v2-copy"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

@@ -16,6 +16,16 @@ from sklearn.metrics import precision_recall_curve, auc
 import itertools
 from find_critical_parameters import find_critical_para, load_model
 
+os.environ['REQUESTS_CA_BUNDLE'] = "./vt.crt"
+os.environ['CURL_CA_BUNDLE'] = ''
+proxy = 'http://10.60.225.127:3128'
+os.environ['http_proxy'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTP_PROXY'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+os.environ['no_proxy'] = 'localhost'
+os.environ['NO_PROXY'] = 'localhost'
+
 def cos_sim_xstest(model_id, df ,gradient_norms_compare,  minus_row, minus_col):
     columns = df[['prompt', 'type']]
     model, tokenizer = load_model(model_id)
@@ -111,7 +121,9 @@ def cos_sim_xstest(model_id, df ,gradient_norms_compare,  minus_row, minus_col):
     return auprc, f1
 
 if __name__ == "__main__":
-    for model_id in ['./model/Llama-2-7b-chat-hf']:
-        gradient_norms_compare, minus_row_cos, minus_col_cos =  find_critical_para(model_id)
-        df = pd.read_csv('./data/xstest/xstest_v2_prompts.csv')
-        auprc, f1 = cos_sim_xstest(model_id, df,gradient_norms_compare, minus_row_cos, minus_col_cos)
+    splits = {'gpt4': 'data/gpt4-00000-of-00001.parquet', 'llama2new': 'data/llama2new-00000-of-00001.parquet', 'llama2orig': 'data/llama2orig-00000-of-00001.parquet', 'mistralguard': 'data/mistralguard-00000-of-00001.parquet', 'mistralinstruct': 'data/mistralinstruct-00000-of-00001.parquet', 'prompts': 'data/prompts-00000-of-00001.parquet'}
+    df = pd.read_parquet("hf://datasets/natolambert/xstest-v2-copy/" + splits["llama2new"])
+    
+    for model_id in ['meta-llama/Llama-2-7b-chat-hf']:  # Using HF model ID directly
+        gradient_norms_compare, minus_row_cos, minus_col_cos = find_critical_para(model_id)
+        auprc, f1 = cos_sim_xstest(model_id, df, gradient_norms_compare, minus_row_cos, minus_col_cos)

@@ -1,0 +1,72 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "toxicchat1123",
+  "dataset_name": "toxic-chat",
+  "dataset_size": 14284627,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/lmsys/toxic-chat@29df8e4dba60e1f4af4b4075c0705c5b313548a8/data/1123/toxic-chat_annotation_train.csv": {
+      "num_bytes": 7134932,
+      "checksum": null
+    },
+    "hf://datasets/lmsys/toxic-chat@29df8e4dba60e1f4af4b4075c0705c5b313548a8/data/1123/toxic-chat_annotation_test.csv": {
+      "num_bytes": 7026093,
+      "checksum": null
+    }
+  },
+  "download_size": 14161025,
+  "features": {
+    "conv_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "user_input": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "model_output": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "human_annotation": {
+      "dtype": "bool",
+      "_type": "Value"
+    },
+    "toxicity": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "jailbreaking": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "openai_moderation": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 28445652,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 7196540,
+      "num_examples": 5082,
+      "dataset_name": "toxic-chat"
+    },
+    "test": {
+      "name": "test",
+      "num_bytes": 7088087,
+      "num_examples": 5083,
+      "dataset_name": "toxic-chat"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

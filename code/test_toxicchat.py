@@ -62,6 +62,11 @@ def cos_sim_toxic(model_id, df ,gradient_norms_compare, minus_row, minus_col):
         input_ids = torch.tensor(np.array([input_ids]))
         target_ids = input_ids.clone()
         target_ids[:, :sep] = -100
+
+        device = next(model.parameters()).device
+        input_ids = input_ids.to(device)
+        target_ids = target_ids.to(device)
+        
         optimizer.zero_grad()
         outputs = model(input_ids, labels=target_ids)
         neg_log_likelihood = outputs.loss
@@ -109,9 +114,10 @@ def cos_sim_toxic(model_id, df ,gradient_norms_compare, minus_row, minus_col):
     del label_all
     return auprc, f1
 
-
 if __name__ == "__main__":
-    for model_id in ['./model/Llama-2-7b-chat-hf']:
-        gradient_norms_compare, minus_row_cos, minus_col_cos =  find_critical_para(model_id)
-        df = pd.read_csv('./data/toxic-chat/toxic-chat_annotation_test.csv')
-        auprc, f1 = cos_sim_toxic(model_id, df,gradient_norms_compare, minus_row_cos, minus_col_cos)
+    splits = {'train': 'data/1123/toxic-chat_annotation_train.csv', 'test': 'data/1123/toxic-chat_annotation_test.csv'}
+    df = pd.read_csv("hf://datasets/lmsys/toxic-chat/" + splits["test"])
+    
+    for model_id in ['meta-llama/Llama-2-7b-chat-hf']:  # Using HF model ID directly
+        gradient_norms_compare, minus_row_cos, minus_col_cos = find_critical_para(model_id)
+        auprc, f1 = cos_sim_toxic(model_id, df, gradient_norms_compare, minus_row_cos, minus_col_cos)

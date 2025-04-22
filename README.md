@@ -32,6 +32,14 @@ Evaluate the performance of GradSafe on two dataset:
 
 > python ./code/test_toxicchat.py
 
+## Local Evaluation Results
+
+When running GradSafe locally on the ToxicChat dataset, I achieved the following metrics:
+- Precision: 81.16%
+- Recall: 49.45%
+- F1 Score: 61.46%
+- AUPRC: 71.76%
+
 ## Citation
 
 If you find this work useful for your research, please cite:
