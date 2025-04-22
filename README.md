@@ -34,23 +34,10 @@ Evaluate the performance of GradSafe on two dataset:
 
 ## Local Evaluation Results
 
-When running GradSafe locally on the ToxicChat dataset, I achieved the following metrics:
+When running GradSafe on my local for the ToxicChat dataset, I achieved the following metrics:
 - Precision: 81.16%
 - Recall: 49.45%
 - F1 Score: 61.46%
 - AUPRC: 71.76%
-
-## Citation
-
-If you find this work useful for your research, please cite:
-```
-@inproceedings{xie2024gradsafe,
-  title={GradSafe: Detecting Jailbreak Prompts for LLMs via Safety-Critical Gradient Analysis},
-  author={Xie, Yueqi and Fang, Minghong and Pi, Renjie and Gong, Neil},
-  booktitle={Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
-  pages={507--518},
-  year={2024}
-}
-```
 
 
